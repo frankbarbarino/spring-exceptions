@@ -1,4 +1,4 @@
-package api.challenge.model;
+package org.frank.model;
 
 import java.util.Objects;
 

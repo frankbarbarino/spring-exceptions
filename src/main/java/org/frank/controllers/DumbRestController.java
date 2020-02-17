@@ -1,7 +1,7 @@
-package api.challenge;
+package org.frank.controllers;
 
-import api.challenge.model.ErrorResponseRuntimeException;
-import api.challenge.model.StockDto;
+import org.frank.model.ErrorResponseRuntimeException;
+import org.frank.model.StockDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

@@ -1,7 +1,7 @@
-package api.challenge;
+package org.frank.spring;
 
-import api.challenge.model.ErrorResponseBody;
-import api.challenge.model.ErrorResponseRuntimeException;
+import org.frank.model.ErrorResponseBody;
+import org.frank.model.ErrorResponseRuntimeException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,31 +16,13 @@ public class GlobalExceptionHandler {
 
   final static Logger logger = Logger.getLogger(GlobalExceptionHandler.class.getName());
 
-
-//  @ExceptionHandler(value = Exception.class)
-//  public ModelAndView defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {
-//    // If the exception is annotated with @ResponseStatus rethrow it and let
-//    // the framework handle it.
-//    // AnnotationUtils is a Spring Framework utility class.
-//    if (AnnotationUtils.findAnnotation
-//        (e.getClass(), ResponseStatus.class) != null)
-//      throw e;
-//
-//    // Otherwise setup and send the user to a default error-view.
-//    ModelAndView mav = new ModelAndView();
-//    mav.addObject("exception", e);
-//    mav.addObject("url", req.getRequestURL());
-//    mav.addObject("this is view", "and model");
-//    // mav.setViewName();
-//    return mav;
-//  }
-
   @ExceptionHandler(value
-      = { ErrorResponseRuntimeException.class })
+      = {ErrorResponseRuntimeException.class})
   protected ResponseEntity<ErrorResponseBody> handleRuntime(ErrorResponseRuntimeException ex, WebRequest request) {
-    // log error.
     ErrorResponseBody errorResponseBody = new ErrorResponseBody();
     errorResponseBody.setPath(ex.getPath());
+    // TODO: transpose Http status codes if needed
+    // e.g. 400s to 503
     errorResponseBody.setReason(ex.getReason());
     logger.warning(errorResponseBody.toString());
     return new ResponseEntity<ErrorResponseBody>(
@@ -51,9 +33,15 @@ public class GlobalExceptionHandler {
 
 
   @ExceptionHandler(value
-      = { Exception.class })
+      = {Exception.class})
   protected ResponseEntity<ErrorResponseBody> handleUnexpected(Exception ex, WebRequest request) {
-    ErrorResponseBody errorResponseBody = new ErrorResponseBody();
+//    // If the exception is annotated with @ResponseStatus rethrow it and let
+//    // the framework handle it.
+//    // AnnotationUtils is a Spring Framework utility class.
+//    if (AnnotationUtils.findAnnotation
+//        (e.getClass(), ResponseStatus.class) != null)
+//      throw e;
+      ErrorResponseBody errorResponseBody = new ErrorResponseBody();
     errorResponseBody.setPath(request.getContextPath());
     errorResponseBody.setReason(ex.getMessage());
     logger.warning(errorResponseBody.toString());

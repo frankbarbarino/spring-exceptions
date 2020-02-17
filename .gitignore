@@ -7,3 +7,5 @@ gradle/*
 gradlew
 .classpath
 gradlew.bat
+.idea
+.idea/*
